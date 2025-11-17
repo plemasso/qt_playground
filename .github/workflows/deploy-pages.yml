@@ -1,0 +1,86 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Install Qt for WebAssembly
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: '6.8.2'
+        host: 'linux'
+        target: 'desktop'
+        arch: 'wasm_multithread'
+        modules: 'qtquick'
+        cache: true
+        
+    - name: Setup Emscripten
+      uses: mymindstorm/setup-emsdk@v14
+      with:
+        version: '3.1.56'
+        actions-cache-folder: 'emsdk-cache'
+        
+    - name: Configure CMake
+      run: |
+        cmake -B build \
+          -G "Ninja" \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_PREFIX_PATH="${Qt6_DIR}" \
+          -DCMAKE_TOOLCHAIN_FILE="${EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake" \
+          -DQT_HOST_PATH="${Qt6_DIR}/../gcc_64" \
+          -DQT_QMAKE_EXECUTABLE="${Qt6_DIR}/../gcc_64/bin/qmake"
+        
+    - name: Build
+      run: cmake --build build --config Release
+      
+    - name: Create deployment directory
+      run: |
+        mkdir -p deploy
+        cp build/appPlayground.html deploy/index.html
+        cp build/appPlayground.js deploy/
+        cp build/appPlayground.wasm deploy/
+        cp build/appPlayground.worker.js deploy/
+        cp build/qtloader.js deploy/
+        
+    - name: Add COOP/COEP headers configuration
+      run: |
+        cat > deploy/_headers << 'EOF'
+        /*
+          Cross-Origin-Opener-Policy: same-origin
+          Cross-Origin-Embedder-Policy: require-corp
+        EOF
+        
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+      
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: './deploy'
+        
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4

@@ -1,0 +1,61 @@
+name: Build WebAssembly
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-wasm:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Install Qt for WebAssembly
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: '6.8.2'
+        host: 'linux'
+        target: 'desktop'
+        arch: 'wasm_multithread'
+        modules: 'qtquick'
+        cache: true
+        
+    - name: Setup Emscripten
+      uses: mymindstorm/setup-emsdk@v14
+      with:
+        version: '3.1.56'
+        actions-cache-folder: 'emsdk-cache'
+        
+    - name: Verify Emscripten
+      run: |
+        emcc --version
+        echo "EMSDK=$EMSDK"
+        
+    - name: Configure CMake
+      run: |
+        cmake -B build \
+          -G "Ninja" \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_PREFIX_PATH="${Qt6_DIR}" \
+          -DCMAKE_TOOLCHAIN_FILE="${EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake" \
+          -DQT_HOST_PATH="${Qt6_DIR}/../gcc_64" \
+          -DQT_QMAKE_EXECUTABLE="${Qt6_DIR}/../gcc_64/bin/qmake"
+        
+    - name: Build
+      run: cmake --build build --config Release
+      
+    - name: Upload WebAssembly artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: appPlayground-wasm
+        path: |
+          build/appPlayground.html
+          build/appPlayground.js
+          build/appPlayground.wasm
+          build/appPlayground.worker.js
+          build/qtloader.js

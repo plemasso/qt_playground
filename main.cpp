@@ -6,7 +6,7 @@
 
 #include "datamodel.h"
 #include "navigatorcaptain.h"
-#include "ExternalVaillantModules/simplemenumodel.h"
+#include "ExternalModules/simplemenumodel.h"
 
 int main(int argc, char *argv[])
 {

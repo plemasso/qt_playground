@@ -31,10 +31,10 @@ qt_add_qml_module(appPlayground
 )
 
 # Statement for adding "SimpleMenu" as external module/plugin
-add_subdirectory(ExternalVaillantModules)
+add_subdirectory(ExternalModules)
 
 set (_QML_IMPORT_PATHS "")
-list(APPEND _QML_IMPORT_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ExternalVaillantModules)
+list(APPEND _QML_IMPORT_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ExternalModules)
 set (
     QML_IMPORT_PATH
     ${QT_QML_OUTPUT_DIRECTORY}
