@@ -18,18 +18,20 @@ jobs:
     - name: Install Qt for WebAssembly
       uses: jurplel/install-qt-action@v4
       with:
-        version: '6.7.3'
+        version: '6.8.3'
         host: 'linux'
-        target: 'desktop'
+        target: 'wasm'
         arch: 'wasm_singlethread'
         modules: 'qtquick'
         cache: true
         setup-python: false
+        aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@wasm'
+        extra: '--autodesktop'
         
     - name: Setup Emscripten
       uses: mymindstorm/setup-emsdk@v14
       with:
-        version: '3.1.50'
+        version: '3.1.56'
         actions-cache-folder: 'emsdk-cache'
         
     - name: Verify Emscripten
