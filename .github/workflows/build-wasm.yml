@@ -20,10 +20,11 @@ jobs:
       with:
         version: '6.7.3'
         host: 'linux'
-        target: 'wasm'
-        arch: 'win64_msvc2022_64'
+        target: 'desktop'
+        arch: 'wasm_singlethread'
         modules: 'qtquick'
         cache: true
+        setup-python: false
         
     - name: Setup Emscripten
       uses: mymindstorm/setup-emsdk@v14
