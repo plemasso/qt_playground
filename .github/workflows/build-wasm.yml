@@ -20,8 +20,8 @@ jobs:
       with:
         version: '6.7.3'
         host: 'linux'
-        target: 'desktop'
-        arch: 'wasm_singlethread'
+        target: 'wasm'
+        arch: 'win64_msvc2022_64'
         modules: 'qtquick'
         cache: true
         
