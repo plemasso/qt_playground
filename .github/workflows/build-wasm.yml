@@ -20,13 +20,11 @@ jobs:
       with:
         version: '6.8.3'
         host: 'linux'
-        target: 'wasm'
+        target: 'desktop'
         arch: 'wasm_singlethread'
         modules: 'qtquick'
         cache: true
-        setup-python: false
-        aqtsource: 'git+https://github.com/Kidev/aqtinstall.git@wasm'
-        extra: '--autodesktop'
+        use-official: true
         
     - name: Setup Emscripten
       uses: mymindstorm/setup-emsdk@v14
