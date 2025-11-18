@@ -43,23 +43,21 @@ jobs:
         host: 'all_os'
         target: 'wasm'
         arch: 'wasm_singlethread'
-        #modules: 'qtquick'
+        modules: 'qtquick'
 
-# download with curl in command line
-
-#    - name: Configure CMake
-#      run: |
-#        cmake -B build \
-#          -G "Ninja" \
-#          -DCMAKE_BUILD_TYPE=Release \
-#          -DCMAKE_PREFIX_PATH="${Qt6_DIR}" \
-#          -DCMAKE_TOOLCHAIN_FILE="${EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake" \
-#          -DQT_HOST_PATH="${Qt6_DIR}/../gcc_64" \
-#          -DQT_QMAKE_EXECUTABLE="${Qt6_DIR}/../gcc_64/bin/qmake"
-#        
-#    - name: Build
-#      run: cmake --build build --config Release
-#      
+    - name: Configure CMake
+      run: |
+        cmake -B build \
+          -G "Ninja" \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_PREFIX_PATH="${Qt6_DIR}" \
+          -DCMAKE_TOOLCHAIN_FILE="${EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake" \
+          -DQT_HOST_PATH="${Qt6_DIR}/../gcc_64" \
+          -DQT_QMAKE_EXECUTABLE="${Qt6_DIR}/../gcc_64/bin/qmake"
+        
+    - name: Build
+      run: cmake --build build --config Release
+      
 #    - name: Upload WebAssembly artifacts
 #      uses: actions/upload-artifact@v4
 #      with:
@@ -70,4 +68,3 @@ jobs:
 #          build/appPlayground.wasm
 #          build/appPlayground.worker.js
 #          build/qtloader.js
-#
