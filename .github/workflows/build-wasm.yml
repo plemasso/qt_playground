@@ -38,7 +38,7 @@ jobs:
         echo "EMSDK=$EMSDK"
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v4
+      uses: jurplel/install-qt-action@v4.3
       with:
         host: 'linux'
         target: 'wasm'
