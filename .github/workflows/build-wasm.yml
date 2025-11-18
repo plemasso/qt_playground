@@ -13,7 +13,7 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       
 #    - name: Install Qt for WebAssembly
 #      uses: jurplel/install-qt-action@v4
@@ -36,6 +36,12 @@ jobs:
       run: |
         emcc --version
         echo "EMSDK=$EMSDK"
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      host: 'linux'
+      target: 'wasm'
+      #modules: 'qtquick'
 
 # download with curl in command line
 
