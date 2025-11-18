@@ -42,7 +42,8 @@ jobs:
       with:
         host: 'linux'
         target: 'wasm'
-        arch: 'wasm_singlethread'
+        arch: 'win64_msvc2022_64'
+        #arch: 'wasm_singlethread'
         #modules: 'qtquick'
 
 # download with curl in command line
