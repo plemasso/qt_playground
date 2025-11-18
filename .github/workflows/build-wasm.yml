@@ -39,9 +39,10 @@ jobs:
 
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
-      host: 'linux'
-      target: 'wasm'
-      #modules: 'qtquick'
+      with:
+        host: 'linux'
+        target: 'wasm'
+        #modules: 'qtquick'
 
 # download with curl in command line
 
