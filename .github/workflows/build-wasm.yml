@@ -47,6 +47,8 @@ jobs:
 
     - name: debug cmake path
       run: |
+        pwd
+        ls -l P:\Qt
         echo "Qt6_DIR=${Qt6_DIR}"
 
     - name: Configure CMake
