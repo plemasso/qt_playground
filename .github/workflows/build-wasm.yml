@@ -38,10 +38,11 @@ jobs:
         echo "EMSDK=$EMSDK"
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v4
+      uses: jurplel/install-qt-action@v4.3.0
       with:
         host: 'linux'
         target: 'wasm'
+        arch: 'wasm_singlethread'
         #modules: 'qtquick'
 
 # download with curl in command line
