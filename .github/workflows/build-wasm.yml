@@ -45,7 +45,7 @@ jobs:
         arch: 'wasm_singlethread'
         #modules: 'qtquick'
 
-    -name: debug cmake path
+    - name: debug cmake path
      run: |
        echo "Qt6_DIR=${Qt6_DIR}"
 
