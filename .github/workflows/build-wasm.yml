@@ -43,7 +43,7 @@ jobs:
         host: 'all_os'
         target: 'wasm'
         arch: 'wasm_singlethread'
-        modules: 'qtquick'
+        #modules: 'qtquick'
 
     - name: Configure CMake
       run: |
