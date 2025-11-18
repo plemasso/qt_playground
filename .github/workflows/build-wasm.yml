@@ -37,10 +37,6 @@ jobs:
         emcc --version
         echo "EMSDK=$EMSDK"
 
-    - name: Verify aqt list-qt linux wasm
-      run: |
-        aqt list-qt linux wasm
-
     - name: Install Qt
       uses: jurplel/install-qt-action@v4.3.0
       with:
