@@ -46,8 +46,8 @@ jobs:
         #modules: 'qtquick'
 
     - name: debug cmake path
-     run: |
-       echo "Qt6_DIR=${Qt6_DIR}"
+      run: |
+        echo "Qt6_DIR=${Qt6_DIR}"
 
     - name: Configure CMake
       run: |
