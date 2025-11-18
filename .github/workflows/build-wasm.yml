@@ -45,6 +45,10 @@ jobs:
         arch: 'wasm_singlethread'
         #modules: 'qtquick'
 
+    -name: debug cmake path
+     run: |
+       echo "Qt6_DIR=${Qt6_DIR}"
+
     - name: Configure CMake
       run: |
         cmake -B build \
@@ -53,7 +57,6 @@ jobs:
           -DCMAKE_PREFIX_PATH="${Qt6_DIR}" \
           -DCMAKE_TOOLCHAIN_FILE="${EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake" \
           -DQT_HOST_PATH="${Qt6_DIR}/../gcc_64" \
-          -DQT_QMAKE_EXECUTABLE="${Qt6_DIR}/../gcc_64/bin/qmake"
         
     - name: Build
       run: cmake --build build --config Release
