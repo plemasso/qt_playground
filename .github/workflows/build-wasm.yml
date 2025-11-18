@@ -48,8 +48,8 @@ jobs:
     - name: debug cmake path
       run: |
         pwd
-        ls -l P:\Qt
-        echo "Qt6_DIR=${Qt6_DIR}"
+        ls -l ${QT_ROOT_DIR}
+        echo "QT_ROOT_DIR=${QT_ROOT_DIR}"
 
     - name: Configure CMake
       run: |
