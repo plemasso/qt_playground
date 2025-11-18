@@ -15,17 +15,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Install Qt for WebAssembly
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: '6.8.3'
-        host: 'linux'
-        target: 'desktop'
-        arch: 'wasm_singlethread'
-        modules: 'qtquick'
-        cache: true
-        use-official: true
-        
+#    - name: Install Qt for WebAssembly
+#      uses: jurplel/install-qt-action@v4
+#      with:
+#        version: '6.8.3'
+#        host: 'linux'
+#        target: 'desktop'
+#        arch: 'wasm_singlethread'
+#        modules: 'qtquick'
+#        cache: true
+#        use-official: true
+
     - name: Setup Emscripten
       uses: mymindstorm/setup-emsdk@v14
       with:
@@ -36,27 +36,30 @@ jobs:
       run: |
         emcc --version
         echo "EMSDK=$EMSDK"
-        
-    - name: Configure CMake
-      run: |
-        cmake -B build \
-          -G "Ninja" \
-          -DCMAKE_BUILD_TYPE=Release \
-          -DCMAKE_PREFIX_PATH="${Qt6_DIR}" \
-          -DCMAKE_TOOLCHAIN_FILE="${EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake" \
-          -DQT_HOST_PATH="${Qt6_DIR}/../gcc_64" \
-          -DQT_QMAKE_EXECUTABLE="${Qt6_DIR}/../gcc_64/bin/qmake"
-        
-    - name: Build
-      run: cmake --build build --config Release
-      
-    - name: Upload WebAssembly artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: appPlayground-wasm
-        path: |
-          build/appPlayground.html
-          build/appPlayground.js
-          build/appPlayground.wasm
-          build/appPlayground.worker.js
-          build/qtloader.js
+
+# download with curl in command line
+
+#    - name: Configure CMake
+#      run: |
+#        cmake -B build \
+#          -G "Ninja" \
+#          -DCMAKE_BUILD_TYPE=Release \
+#          -DCMAKE_PREFIX_PATH="${Qt6_DIR}" \
+#          -DCMAKE_TOOLCHAIN_FILE="${EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake" \
+#          -DQT_HOST_PATH="${Qt6_DIR}/../gcc_64" \
+#          -DQT_QMAKE_EXECUTABLE="${Qt6_DIR}/../gcc_64/bin/qmake"
+#        
+#    - name: Build
+#      run: cmake --build build --config Release
+#      
+#    - name: Upload WebAssembly artifacts
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: appPlayground-wasm
+#        path: |
+#          build/appPlayground.html
+#          build/appPlayground.js
+#          build/appPlayground.wasm
+#          build/appPlayground.worker.js
+#          build/qtloader.js
+#
